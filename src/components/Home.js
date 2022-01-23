@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BtnCar, Buscador, Formulario, ImgCard, TextContainer, Title, TopPage,} from '../../styles/homeStyles/HomeStyles';
+import { BtnCar, Buscador, Formulario, ImgCard, TextContainer, Title, TopPage,} from '../styles/HomeStyles';
 
 
 
