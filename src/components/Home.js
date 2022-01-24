@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BtnCar, Buscador, Formulario, ImgCard, TextContainer, Title, TopPage,} from '../styles/HomeStyles';
+import { Card, BtnCar, Buscador, Formulario, ImgCard, TextContainer, Title, TopPage, NavContainer, ListaC,Item, CardsContainer, CardImg, TitleCContainer, Producto} from '../styles/HomeStyles';
+import {Link} from 'react-router-dom'
 
 
 
@@ -23,13 +24,56 @@ export default class Navbar extends Component {
         </Formulario>
       </TextContainer>
 
-      <div>
-        <ul>
-          <li>Guajolotes</li>
-          <li>Bebidas</li>
-          <li>Tamales</li>
-        </ul>
-      </div>
+      <NavContainer>
+        <ListaC>
+          <Item><Link to="/guajolotes">Guajolotes</Link></Item>
+          <Item><Link to="/guajolotes">Bebidas</Link></Item>
+          <Item><Link to="/guajolotes">Tamales</Link></Item>
+        </ListaC>
+      </NavContainer>
+
+      <CardsContainer>
+        <Card>
+          <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
+          <TitleCContainer>
+              <Producto>Té Verde</Producto>
+              <h4>$24.5</h4>
+          </TitleCContainer>
+        </Card>
+
+        <Card>
+        <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
+        <TitleCContainer>
+              <Producto>Té Verde</Producto>
+              <h4>$24.5</h4>
+          </TitleCContainer>
+        </Card>
+
+        <Card>
+        <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
+        <TitleCContainer>
+              <Producto>Té Verde</Producto>
+              <h4>$24.5</h4>
+          </TitleCContainer>
+        </Card>
+
+        <Card>
+        <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
+        <TitleCContainer>
+              <Producto>Té Verde</Producto>
+              <h4>$24.5</h4>
+          </TitleCContainer>
+        </Card>
+
+        <Card>
+        <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
+        <TitleCContainer>
+              <Producto>Té Verde</Producto>
+              <h4>$24.5</h4>
+          </TitleCContainer>
+        </Card>
+
+      </CardsContainer>
 
       
       </div>

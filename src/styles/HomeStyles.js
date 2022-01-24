@@ -62,13 +62,65 @@ export const Buscador= styled.input`
 // Navegador
 
 export const NavContainer= styled.div`
-
+    display: flex;
 `
 
-export const Lista= styled.ul`
-
+export const ListaC= styled.ul`
+    border: 1px solid blue;
+    display: flex;
+    width:98% ;
+    align-items: center;
+    justify-content: space-between;
 `
 
 export const Item= styled.li`
+    list-style: none;
+    align-items: center;
+    justify-content: center; 
     
 `
+
+// cards
+
+export const CardsContainer= styled.div`
+    display: flex;
+    flex-direction:column ;
+    align-items: center;
+    justify-content: center;
+`
+
+export const Card= styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    background: #fff;
+    border: none;
+    width: 90%;
+    padding: 16px;
+    border-radius: 20px;
+    margin: 5px 0 5px 0;
+
+`
+
+ export const CardImg= styled.img`
+    background:#fff;
+    width: 100px;
+    height: 100px;
+ `
+
+ export const TitleCContainer= styled.div`    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    background: #fff;
+    padding: 20px;
+ `
+
+ export const Producto=styled.h3`
+    line-height: 21px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #fff;
+ `
