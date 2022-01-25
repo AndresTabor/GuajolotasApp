@@ -4,9 +4,9 @@ import Home from '../components/Home';
 
 const AppRoutes = () => {
   return <div>
-      <BrowserRouter>
+      <BrowserRouter>       
         <Routes>
-          <Route path="/" element={<Home />} />         
+           <Route path='/' element={<Home />} />
         </Routes>
       </BrowserRouter>
   </div>;

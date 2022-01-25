@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 
@@ -40,6 +41,13 @@ export const Formulario= styled.form`
     padding: 15px;
 `
 
+export const LensImg= styled.img`
+    position: absolute;
+    background: none;
+    width: 20px;
+    margin: 15px;  
+`
+
 export const Buscador= styled.input`   
     text-align: center;
     padding: 5px 20px;
@@ -48,6 +56,7 @@ export const Buscador= styled.input`
     border-radius: 30px;
     border: none;
     background-color: #E7E7E7;
+    padding-left: 35px;
     &::placeholder {      
         color: #9A9A9D;
         display: flex;
@@ -65,8 +74,7 @@ export const NavContainer= styled.div`
     display: flex;
 `
 
-export const ListaC= styled.ul`
-    border: 1px solid blue;
+export const ListaC= styled.ul`    
     display: flex;
     width:98% ;
     align-items: center;
@@ -78,6 +86,17 @@ export const Item= styled.li`
     align-items: center;
     justify-content: center; 
     
+`
+
+export const LinkStyle= styled(Link)`
+    text-decoration: none;
+    color: #9A9A9D;
+    font-size: 20px;
+    :active{
+        font-weight: bold;
+        color:#FA4A0C;
+        text-decoration: underline;        
+    }
 `
 
 // cards
@@ -122,5 +141,12 @@ export const Card= styled.div`
     line-height: 21px;
     font-size: 20px;
     font-weight: bold;
+    background: #fff;
+ `
+
+ export const PriceProduct= styled.h4`
+    font-size: 20px;
+    font-weight: bold;
+    color: #FA4A0C;
     background: #fff;
  `
