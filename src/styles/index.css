@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,12 +9,12 @@
 :root{
   --primary: #FA4A0C;
   --secondary: #0D0D0D;
-  --bg-color: #f2f2f2;
+  --bg-color: #f6f6f6;
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
+  background-color: var(--bg-color) !important;
 }
 
 
