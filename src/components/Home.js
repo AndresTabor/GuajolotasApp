@@ -1,11 +1,23 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BtnCar, Buscador, Formulario, ImgCard, TextContainer, Title, TopPage, NavContainer, ListaC,Item, LinkStyle, PriceProduct, Producto, TitleCContainer, CardImg, CardsContainer, Card, LensImg} from '../styles/HomeStyles';
+import {url} from '../helpers/Url'
+
+export const Home= () =>  {
+
+  const [producto, setProducto] = useState([]);
 
 
+    const getData = async () =>{
+      const res = await fetch(url)
+      const data= await res.json()
+      setProducto(data);
+    }
 
+    useEffect(() => {
+    getData()
+  }, []);
 
-export default class Navbar extends Component {
-  render() {
+     
     return(
         <div>
 
@@ -32,51 +44,23 @@ export default class Navbar extends Component {
         </ListaC>
       </NavContainer>    
 
-      <CardsContainer>
-    <Card>
-      <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
-      <TitleCContainer>
-          <Producto>Té Verde</Producto>
-          <PriceProduct>24.5 MXN</PriceProduct>
-      </TitleCContainer>
-    </Card>
+    <CardsContainer>{
+      producto.map(Item =>(
+        <Card>
+          <CardImg src={Item.image} alt='' />
+          <TitleCContainer id={Item.id}>
+              <Producto>{Item.name}</Producto>
+              <PriceProduct>{Item.price} MXN</PriceProduct>
+          </TitleCContainer>
+        </Card>
+      ))
 
-    <Card>
-    <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
-    <TitleCContainer>
-          <Producto>Té Verde</Producto>
-          <PriceProduct>24.5 MXN</PriceProduct>
-      </TitleCContainer>
-    </Card>
-
-    <Card>
-    <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
-    <TitleCContainer>
-          <Producto>Té Verde</Producto>
-          <PriceProduct>24.5 MXN</PriceProduct>
-      </TitleCContainer>
-    </Card>
-
-    <Card>
-    <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
-    <TitleCContainer>
-          <Producto>Té Verde</Producto>
-          <PriceProduct>24.5 MXN</PriceProduct>
-      </TitleCContainer>
-    </Card>
-
-    <Card>
-    <CardImg src='https://i.ibb.co/ft24pXS/G-verde.png' alt='Guajolota-T-verde' />
-    <TitleCContainer>
-          <Producto>Té Verde</Producto>
-          <PriceProduct>24.5 MXN</PriceProduct>
-      </TitleCContainer>
-    </Card>
-
-  </CardsContainer>
+} 
+      
+         
+    </CardsContainer>
 
       </div>
         
     )
-  }
-}
+ }

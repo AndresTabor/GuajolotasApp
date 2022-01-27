@@ -95,7 +95,7 @@ export const LinkStyle= styled(Link)`
     :active{
         font-weight: bold;
         color:#FA4A0C;
-        text-decoration: underline;        
+        border-bottom: 2px solid #FA4A0C;
     }
 `
 
