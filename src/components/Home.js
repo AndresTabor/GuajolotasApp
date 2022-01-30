@@ -4,21 +4,25 @@ import {url} from '../helpers/Url'
 
 export const Home= () =>  {
 
+  
   const [producto, setProducto] = useState([]);
 
 
-    const getData = async () =>{
-      const res = await fetch(url)
+    const getData = async (category) =>{
+      const res = await fetch(`https://guajolotasapp.herokuapp.com/category/${category}/products/`)
       const data= await res.json()
       setProducto(data);
     }
 
+   
     useEffect(() => {
-    getData()
+    getData(1)
+    
   }, []);
+ 
 
      
-    return(
+   return(
         <div>
 
         <TopPage>
@@ -38,17 +42,17 @@ export const Home= () =>  {
 
       <NavContainer>
         <ListaC>
-          <Item><LinkStyle to="/guajolotes">Guajolotes</LinkStyle></Item>
-          <Item><LinkStyle to="/bebidas">Bebidas</LinkStyle></Item>
-          <Item><LinkStyle to="/tamales">Tamales</LinkStyle></Item>
+          <Item><LinkStyle onClick={() => getData (1)} to="/">Guajolotes</LinkStyle></Item>
+          <Item><LinkStyle onClick={() => getData (3)} to='/'>Bebidas</LinkStyle></Item>
+          <Item><LinkStyle onClick={() => getData (2)} to="/" >Tamales</LinkStyle></Item>
         </ListaC>
       </NavContainer>    
 
     <CardsContainer>{
       producto.map(Item =>(
-        <Card>
+        <Card key={Item.id}>
           <CardImg src={Item.image} alt='' />
-          <TitleCContainer id={Item.id}>
+          <TitleCContainer id={Item.categoryId}>
               <Producto>{Item.name}</Producto>
               <PriceProduct>{Item.price} MXN</PriceProduct>
           </TitleCContainer>
