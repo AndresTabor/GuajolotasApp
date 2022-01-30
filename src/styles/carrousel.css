@@ -1,0 +1,12 @@
+.styling-example .rec.rec-arrow {
+    display: none !important;
+}
+
+/* round buttons on hover */
+.styling-example .rec.rec-arrow:hover {
+    border-radius: 50%!important;
+}
+
+.styling-example .rec .rec-pagination {
+    display: none !important;
+}

@@ -57,10 +57,15 @@ export const AmountContainer = styled.div`
         border: none;
     }
 `
+export const FlavorBtn = styled.button`
+    opacity: 0.5;
+    border: none;
+    background-color: none;
+    border-radius: 50%;
+`
 export const FlavorImage = styled.img`         
     width: 64px;
-    height: auto;
-    
+    height: auto;        
 `
 export const H2Title = styled.h2`
     font-weight: 600;
@@ -94,10 +99,15 @@ export const InputContainer = styled.div`
     width: 100%;
     height: 55%;
     justify-content: space-between;
+    & input{
+        width: 24px;
+        height: 24px;
+        border: 2px solid #0D0D0D;
+    }
 `
 export const ComboItemDescription = styled.div`
     width: 100%;
-    height: 36%;
+    height: 45%;
     font-size: 0.8rem;
     font-weight: 600;
     text-align-last: start;

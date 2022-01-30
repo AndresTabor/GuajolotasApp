@@ -4,7 +4,7 @@ import { BackArrow, Btn, CartIconContainer, CartTitle, Container, DescriptionCar
 
 const Cart = () => {
 
-  const [state, setState] = useState([1]);
+  const [state, setState] = useState([0]);
   console.log(state.length);
   return <>
           <Container>
