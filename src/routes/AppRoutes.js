@@ -1,17 +1,15 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Carrouserl from '../components/Carrouserl';
-import Cart from '../components/Cart';
-import Details from '../components/Details';
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import { Home } from '../components/Home';
 
 const AppRoutes = () => {
-  return <BrowserRouter>
-            <Routes>
-              <Route path="/cart" element={<Cart/>} /> 
-              <Route path="/details" element={<Details />} />
-              <Route path="/carrousel" element={<Carrouserl />} />
-            </Routes>
-        </BrowserRouter>;
+  return <div>
+      <BrowserRouter>       
+        <Routes>
+           <Route path='/' element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+  </div>;
 };
 
 export default AppRoutes;
