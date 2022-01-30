@@ -23,7 +23,7 @@ export const Home = () => {
   const filtrar = value => {
   setBuscador(value);
   console.log(buscador)
-    if (buscador != ''){
+    if (buscador.length >= 2){
       let productosTemporales = producto.filter(
         item => {
           return item.name.toLowerCase().indexOf(buscador.toLowerCase())  > -1
