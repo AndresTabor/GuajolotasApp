@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -8,7 +9,10 @@ export const TopPage= styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-
+    & a {
+        color: grey;
+        margin: 0 5px;
+    }
 `
 
 export const ImgCard= styled.img`

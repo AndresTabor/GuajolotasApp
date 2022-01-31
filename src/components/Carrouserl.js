@@ -10,6 +10,7 @@ const Carrouserl = ({products, focus}) => {
     useEffect(() => {
         document.getElementById("flavor"+item).style.opacity="1";  
               
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const prueba = (position) => {
         

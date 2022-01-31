@@ -11,16 +11,24 @@ import { endPoint } from '../helpers/Url';
 
 const AppRoutes = () => {
   const [products, setProducts] = useState([]);
+  const [user, setUser] = useState({});
+  const [logged, setLogged] = useState(false)
+  
 
   useEffect(() => {
     getData(endPoint+"products").then(items => setProducts(items))
     
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user))    
+    localStorage.setItem('estado',logged)
+  }, [logged])
   
   console.log(products);
   return <BrowserRouter>
             <Routes>
-              <Route path="/login" element={<Login/>} /> 
+              <Route path="/login" element={<Login cambioUser={setUser} setLogged={setLogged}/>} /> 
               <Route path="/register" element={<Register/>} /> 
               <Route path="/" element={<Home/>} /> 
               <Route path="/cart" element={<Cart/>} /> 

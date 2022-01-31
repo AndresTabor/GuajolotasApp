@@ -17,5 +17,8 @@ body {
   font-family: 'Inter', sans-serif !important;
   background-color: var(--bg-color) !important;
 }
+.swal2-styled.swal2-confirm{
+  background-color: var(--primary)!important;
+}
 
 

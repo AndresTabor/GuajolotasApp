@@ -1,67 +1,89 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { endPoint } from "../helpers/Url";
+import { ButtonLogin, Div, Form, H2, Img, Input, Linka } from "../styles/LoginStyle";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
-export const Login = () => {
-  const [user, setUser] = useState({
-    email: "",
-    password: ""
-  });
+export const Login = ({ setLogged, cambioUser }) => {
+    const MySwal = withReactContent(Swal)
+    const [user, setUser] = useState({
+        email: "",
+        password: ""
+    });
 
-  const [ validacion, setValidacion] = useState([])
-  const navigate = useNavigate();
+    const [ validacion, setValidacion] = useState([])
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    postData()
-  }, []);
+    useEffect(() => {
+        postData()
+    }, []);
   
 
-  const postData = () => {
-    axios.get(endPoint +'user')
-      .then((response) => 
-        setValidacion(response.data)
-      )
-      .catch((error) => console.log(error));
-    
-  };
+    const postData = () => {
+        axios.get(endPoint +'users')
+        .then((response) => 
+            setValidacion(response.data)
+        )
+        .catch((error) => console.log(error));
+        
+    };
 
-  const validar = () => {
-    //console.log(user.email);
-    const verificar = validacion.find(users => users.email === user.email)
+    const validar = () => {
+        //console.log(user.email);
+        const verificar = validacion.find(users => users.email === user.email)
 
-    if(verificar){
-      verificar.password === user.password ?  navigate('/home', { replace: true }): alert("Contraseña Incorrecta")
-    }else{
-      alert("Usuario no registrado");
+        if(verificar){
+            if (verificar.password === user.password) {
+                
+                MySwal.fire({
+                title: <strong>¡Bienvenido!</strong>,
+                html: <i>Continuar</i>,
+                icon: 'success',
+                width: "80%"
+                })
+                setLogged(true);
+                cambioUser(verificar);
+                navigate('/', { replace: true });
+            }else {
+                MySwal.fire({
+                    title: <strong>Contraseña Incorrecta</strong>,
+                    html: <i>Intentar de nuevo</i>,
+                    icon: 'error',
+                    width: "80%"
+                })
+            }
+        }else{
+            MySwal.fire({
+                title: <strong>Usuario no registrado</strong>,
+                html: <i>Intentar de nuevo</i>,
+                icon: 'error',
+                width: "80%"
+            })
+        }
     }
-  }
 
-  const handleChanged = (e) => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
-    console.log(user);
-  };
+    const handleChanged = (e) => {
+        setUser({
+        ...user,
+        [e.target.name]: e.target.value,
+        });
+        console.log(user);
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
 
   return (
     <div>
       <Form id="login" onSubmit={handleSubmit}>
-        <Link to="/Login">
-          <Img
-            src="https://res.cloudinary.com/do2ijjhfn/image/upload/v1643397049/Color_Purple_Container_Yes_kbvlu6.png"
-          alt="login"></Img>
+        <Link to="/">
+          <Img src="https://i.ibb.co/9sqQqWm/Logotipo.png" alt="login"></Img>
         </Link>
-        <H2>Iniciar de Sesion</H2>
-
-        <ButtonGoogle>Continuar con Google</ButtonGoogle>
-        <Hr></Hr>
+        <H2>Iniciar Sesion</H2>
+        
         <Div>
           <Input
             id="inputEmail"
@@ -80,10 +102,9 @@ export const Login = () => {
             onChange={handleChanged}
           />
         </Div>
-        <div>
-            <Linka>¿Se te olvido tu contraseña?</Linka>
+        <div>            
             <p>¿Aun no tienes cuenta?</p>
-            <Linka>Inscribirse</Linka>
+            <Linka to="register">Inscribirse</Linka>
         </div>
         <Div>
           <ButtonLogin onClick={() => validar()} id="entryLogin">
@@ -95,55 +116,3 @@ export const Login = () => {
   );
 };
 
-const Form = styled.form`
-  background-color: black;
-  text-align: center;
-`;
-const H2 = styled.h2`
-  color: white;
-  font-family: arial;
-  padding: 20px;
-  font-size: 30px;
-`;
-const ButtonGoogle = styled.button`
-  background: #ef4565;
-  border-radius: 5px;
-  color: white;
-  font-family: arial;
-  padding: 15px 50px 15px 50px;
-  margin-bottom: 20px;
-  cursor: pointer;
-`;
-const Div = styled.div`
-  color: white;
-  padding: 10px;
-`;
-const Input = styled.input`
-  padding: 10px 50px;
-`;
-
-const ButtonLogin = styled.button`
-  background: #6b47dc;
-  color: white;
-  padding: 5px 20px 5px 20px;
-  margin-top: 20px;
-  border-radius: 10px;
-  cursor: pointer;
-`;
-const Hr = styled.hr
-`
- 
-  margin-bottom: 10px;
-`;
- const Img = styled.img
- `
- width:100px;
- padding-top: 150px;
- `
-
- const Linka = styled.a
-
- `
- color:#2CB67D;
- font-family:Inter;
- `
