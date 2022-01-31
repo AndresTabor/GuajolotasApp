@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Carrouserl from '../components/Carrouserl';
 import Cart from '../components/Cart';
 import Details from '../components/Details';
@@ -33,7 +33,8 @@ const AppRoutes = () => {
               <Route path="/" element={<Home/>} /> 
               <Route path="/cart" element={<Cart/>} /> 
               <Route path="/details/:id/:category" element={<Details  products={products}/>} />
-              <Route path="/carrousel" element={<Carrouserl />} />              
+              <Route path="/carrousel" element={<Carrouserl />} />  
+              <Route path="/*" element={<Navigate to="/"/>} />            
             </Routes>
         </BrowserRouter>;
 };
