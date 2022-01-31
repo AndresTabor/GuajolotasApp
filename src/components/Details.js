@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FlavorImages } from '../helpers/FlavorIcons';
-import { endPoint } from '../helpers/Url';
 import { AmountContainer, BtnAddCart, DetailsContainer, IconContainer, FlavorImage, H2Title, ComboDescription, ComboCard, InputContainer, ComboItemDescription, FlavorBtn } from '../styles/DetailStyle';
 import Carrouserl from './Carrouserl';
 
@@ -11,8 +10,10 @@ const Details = ({products}) => {
     const params = useParams();
     const { id, category } = params;
     const [subtotal, setSubtotal] = useState(0);
+    // eslint-disable-next-line no-unused-vars
     const [cantidad, setCantidad] = useState(1);
     const [currentCantidad, setCurrentCantidad] = useState(1);
+    // eslint-disable-next-line no-unused-vars
     const [inicial, setInicial] = useState(1);
     const [cart, setCart] = useState([]);
     const [firstItem, setFirstItem] = useState(
@@ -45,6 +46,7 @@ const Details = ({products}) => {
 
     useEffect(() => {
         addCartList(firstItem, "add")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setFirstItem]);
     
 

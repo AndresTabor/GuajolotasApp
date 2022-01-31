@@ -4,6 +4,7 @@ import { BackArrow, Btn, CartIconContainer, CartTitle, Container, DescriptionCar
 
 const Cart = () => {
 
+  // eslint-disable-next-line no-unused-vars
   const [state, setState] = useState([0]);
   console.log(state.length);
   return <>
