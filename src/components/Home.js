@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BtnCar, Buscador, Formulario, ImgCard, TextContainer, Title, TopPage, NavContainer, ListaC,Item, LinkStyle, PriceProduct, Producto, TitleCContainer, CardImg, CardsContainer, Card, LensImg} from '../styles/HomeStyles';
 import {url} from '../helpers/Url'
+import { Link } from 'react-router-dom';
 
 export const Home= () =>  {
 
@@ -23,7 +24,7 @@ export const Home= () =>  {
 
      
    return(
-        <div>
+    <div>
 
         <TopPage>
         <ImgCard src='https://i.ibb.co/9sqQqWm/Logotipo.png' alt='Guappjolotas' />
@@ -32,7 +33,7 @@ export const Home= () =>  {
       </TopPage>
 
       <TextContainer>
-        <Title>Nada como una buena Guajolota para empezar el día</Title>
+        <Title>Nada como una Guajolota para empezar el día</Title>
         
         <Formulario>  
           <LensImg src='https://res.cloudinary.com/dfp8qduho/image/upload/v1642971106/Vector_qdnfnt.png' />                  
@@ -43,28 +44,30 @@ export const Home= () =>  {
       <NavContainer>
         <ListaC>
           <Item><LinkStyle onClick={() => getData (1)} to="/">Guajolotes</LinkStyle></Item>
-          <Item><LinkStyle onClick={() => getData (3)} to='/'>Bebidas</LinkStyle></Item>
-          <Item><LinkStyle onClick={() => getData (2)} to="/" >Tamales</LinkStyle></Item>
+          <Item><LinkStyle onClick={() => getData (3)} to="/">Bebidas</LinkStyle></Item>
+          <Item><LinkStyle onClick={() => getData (2)} to="/">Tamales</LinkStyle></Item>
         </ListaC>
       </NavContainer>    
 
-    <CardsContainer>{
+    <CardsContainer>
+      {
       producto.map(Item =>(
-        <Card key={Item.id}>
-          <CardImg src={Item.image} alt='' />
-          <TitleCContainer id={Item.categoryId}>
-              <Producto>{Item.name}</Producto>
-              <PriceProduct>{Item.price} MXN</PriceProduct>
-          </TitleCContainer>
-        </Card>
+        <Link to={"details/"+Item.id+"/"+Item.categoryId}>
+          <Card key={Item.id}>
+              <CardImg src={Item.image} alt={Item.name} />
+              <TitleCContainer id={Item.categoryId}>
+                  <Producto>{Item.name}</Producto>
+                  <PriceProduct>${Item.price} MXN</PriceProduct>
+              </TitleCContainer>
+          </Card>
+        </Link>
       ))
 
-} 
-      
-         
+      } 
+           
     </CardsContainer>
 
-      </div>
+  </div>
         
     )
  }

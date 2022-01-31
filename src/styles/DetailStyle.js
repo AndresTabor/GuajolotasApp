@@ -10,9 +10,11 @@ export const IconContainer = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-
-    & svg:nth-child(2){
-        opacity: 0.3;
+    & a {
+        color: black;
+    }
+    & a:nth-child(2){
+        color: grey;
     }
 `
 export const ImgContainer = styled.div`

@@ -28,7 +28,7 @@ export const TextContainer= styled.div`
 
 export const Title= styled.h1`
     font-style: normal;
-    font-size:3.2rem ;
+    font-size: 2.1rem;
     font-weight: bold; 
     justify-content: left;
     align-items: center;       
@@ -92,7 +92,7 @@ export const LinkStyle= styled(Link)`
     text-decoration: none;
     color: #9A9A9D;
     font-size: 20px;
-    :active{
+    :hover{
         font-weight: bold;
         color:#FA4A0C;
         border-bottom: 2px solid #FA4A0C;
@@ -106,6 +106,10 @@ export const CardsContainer= styled.div`
     flex-direction:column ;
     align-items: center;
     justify-content: center;
+    & a {
+        text-decoration: none;
+        width: 90%;
+    }
 `
 
 export const Card= styled.div`
@@ -115,7 +119,8 @@ export const Card= styled.div`
     align-items: center;
     background: #fff;
     border: none;
-    width: 90%;
+    width: 100%;
+    height: 112px;
     padding: 16px;
     border-radius: 20px;
     margin: 5px 0 5px 0;
@@ -131,21 +136,22 @@ export const Card= styled.div`
  export const TitleCContainer= styled.div`    
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: center;
     background: #fff;
-    padding: 20px;
+    margin: 0 16px;
  `
 
  export const Producto=styled.h3`
     line-height: 21px;
-    font-size: 20px;
+    font-size: 0.8rem;
     font-weight: bold;
     background: #fff;
+    color: black;
  `
 
  export const PriceProduct= styled.h4`
-    font-size: 20px;
+    font-size: 0.8rem;
     font-weight: bold;
     color: #FA4A0C;
     background: #fff;

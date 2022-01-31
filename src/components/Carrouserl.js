@@ -4,7 +4,7 @@ import Carousel from 'react-elastic-carousel'
 import '../styles/carrousel.css';
 import { DescriptionContainer } from '../styles/DetailStyle';
 
-const Carrouserl = () => {
+const Carrouserl = ({products, focus}) => {
 
     let item = 0;
     useEffect(() => {
@@ -25,14 +25,17 @@ const Carrouserl = () => {
             <div className='styling-example w-100 h-100'>
                 <Carousel itemsToShow={1.5}
                 itemsToScroll={1.5} 
-                initialActiveIndex={0}
+                initialActiveIndex={Number(focus)}
                 focusOnSelect={true}
                 outerSpacing={25}
                 onChange={index => (
                     prueba(index)
                 )}> 
-                    
-                    <div className='text-end'> <img src="https://i.ibb.co/gJjXNWf/T-verde.png" alt="product image1" className='w-75'/></div>
+                    {
+                        products.map((element, index) => (
+                            <div className='text-end' key={index}> <img src={element.image} alt={element.name} className='w-75'/></div>
+                        ))
+                    }
                     
                 </Carousel>
                 <DescriptionContainer>
