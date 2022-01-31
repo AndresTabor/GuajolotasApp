@@ -104,7 +104,7 @@ export const Login = ({ setLogged, cambioUser }) => {
         </Div>
         <div>            
             <p>¿Aun no tienes cuenta?</p>
-            <Linka to="register">Inscribirse</Linka>
+            <Linka to="/register">Inscribirse</Linka>
         </div>
         <Div>
           <ButtonLogin onClick={() => validar()} id="entryLogin">

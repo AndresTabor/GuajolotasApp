@@ -1,79 +1,73 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-const Form = styled.form`
-  background-color: black;
-  text-align: center;
-`;
-const H2 = styled.h2`
-  color: white;
-  font-family: arial;
-  padding: 20px;
-  font-size: 30px;
-`;
-const ButtonGoogle = styled.button`
-  background: #ef4565;
-  border-radius: 5px;
-  color: white;
-  font-family: arial;
-  padding: 15px 50px 15px 50px;
-  margin-bottom: 20px;
-  cursor: pointer;
-`;
-const Div = styled.div`
-  color: white;
-  padding: 10px;
-`;
-const Input = styled.input`
-  padding: 10px 50px;
-`;
-
-const ButtonLogin = styled.button`
-  background: #6b47dc;
-  color: white;
-  padding: 5px 20px 5px 20px;
-  margin-top: 20px;
-  border-radius: 10px;
-  cursor: pointer;
-`;
-const Hr = styled.hr
-`
- 
-  margin-bottom: 10px;
-`;
- const Img = styled.img
- `
- width:100px;
- padding-top: 150px;
- `
-
- const Linka = styled.a
-
- `
- color:#2CB67D;
- font-family:Inter;
- `
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { endPoint } from '../helpers/Url';
+import { ButtonLogin, Div, Form, H2, Img, Input, Linka } from '../styles/LoginStyle';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const Register = () => {
-  return <div>
-    <Form id="login">
-        <Link to="/Login">
-          <Img
-            src="https://res.cloudinary.com/do2ijjhfn/image/upload/v1643397049/Color_Purple_Container_Yes_kbvlu6.png"
-          alt="login"></Img>
-        </Link>
-        <H2>Iniciar de Sesion</H2>
+    const MySwal = withReactContent(Swal)
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        password: ""
+    });
+    const navigate = useNavigate();
 
-        <ButtonGoogle>Continuar con Google</ButtonGoogle>
-        <Hr></Hr>
+    const handleChanged = (e) => {
+        setUser({
+        ...user,
+        [e.target.name]: e.target.value,
+        });
+        console.log(user);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        postData();
+    };
+
+    const postData = () => {
+        axios.post(endPoint+"users",user)
+        .then(response => 
+            MySwal.fire({
+                title: <strong>Registro Exitoso</strong>,
+                html: <i>Continuar</i>,
+                icon: 'success',
+                width: "80%"
+                })
+            )
+            .then(response =>  
+                navigate('/login',{
+                    replace: true
+                }))     
+        .catch(error => console.log(error))
+        
+    }
+  return <div>
+      <Form id="login" onSubmit={handleSubmit}>
+        <Link to="/">
+          <Img src="https://i.ibb.co/9sqQqWm/Logotipo.png" alt="login"></Img>
+        </Link>
+        <H2>Registrate</H2>
+        <Div>
+          <Input
+            id="inputEmail"
+            placeholder="Ingrese su nombre completo"
+            name="name"
+            type="text"
+            onChange={handleChanged} required
+          />
+        </Div>
+        
         <Div>
           <Input
             id="inputEmail"
             placeholder="Ingrese su correo electronico"
             name="email"
             type="email"
-            
+            onChange={handleChanged} required
           />
         </Div>
         <Div>
@@ -82,16 +76,15 @@ const Register = () => {
             placeholder="Ingrese su contraseña"
             type="password"
             name="password"
-            
+            onChange={handleChanged} required
           />
         </Div>
-        <div>
-            <Linka>¿Se te olvido tu contraseña?</Linka>
-            <p>¿Aun no tienes cuenta?</p>
-            <Linka>Inscribirse</Linka>
+        <div>            
+            <p>¿Ya tienes cuenta?</p>
+            <Linka to="login">Inicia Sesion</Linka>
         </div>
         <Div>
-          <ButtonLogin  id="entryLogin">
+          <ButtonLogin>
             Registrarse
           </ButtonLogin>
         </Div>
