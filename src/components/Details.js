@@ -89,7 +89,7 @@ const Details = ({products}) => {
                 </Link>
             </IconContainer>
             <>
-                <Carrouserl focus={id} products={products}/>
+                <Carrouserl focus={id} products={products} category={category}/>
             </>
             
             <AmountContainer>

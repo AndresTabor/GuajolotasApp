@@ -23,6 +23,7 @@ const AppRoutes = () => {
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user))    
     localStorage.setItem('estado',logged)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logged])
   
   console.log(products);

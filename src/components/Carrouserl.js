@@ -4,8 +4,8 @@ import Carousel from 'react-elastic-carousel'
 import '../styles/carrousel.css';
 import { DescriptionContainer } from '../styles/DetailStyle';
 
-const Carrouserl = ({products, focus}) => {
-
+const Carrouserl = ({products, focus, category}) => {
+    
     let item = 0;
     useEffect(() => {
         document.getElementById("flavor"+item).style.opacity="1";  
@@ -33,11 +33,11 @@ const Carrouserl = ({products, focus}) => {
                     prueba(index)
                 )}> 
                     {
-                        products.map((element, index) => (
-                            <div className='text-end' key={index}> <img src={element.image} alt={element.name} className='w-75'/></div>
-                        ))
+                        products.filter(categoria => categoria.categoryId === Number(category)).map(item => (
+                        <div className='text-end' key={item.id}> <img src={item.image} alt={item.name} className='w-75'/></div>
+                                                    
+                    ))
                     }
-                    
                 </Carousel>
                 <DescriptionContainer>
                 <h1>Guajolota de Tamal Verde</h1>
