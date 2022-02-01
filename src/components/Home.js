@@ -58,8 +58,8 @@ export const Home= () =>  {
 
     <CardsContainer>
       {
-      producto.map(Item =>(
-        <Link to={"details/"+Item.id+"/"+Item.categoryId} key={Item.id}>
+      producto.map((Item, index) =>(
+        <Link to={"details/"+index+"/"+Item.categoryId} key={Item.id}>
           <Card>
               <CardImg src={Item.image} alt={Item.name} />
               <TitleCContainer id={Item.categoryId}>

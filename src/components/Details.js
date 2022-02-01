@@ -52,7 +52,6 @@ const Details = ({products}) => {
 
     
     const addCartList = (obj, operation) => {
-        console.log(cart);
         const newItem = {
             id:    obj.id,
             image: obj.image,
@@ -61,20 +60,16 @@ const Details = ({products}) => {
             quantity: 1,
         }
         const validacion = cart.find(item => item.id === newItem.id)
-        console.log(validacion); 
+        
         if (validacion === undefined & operation ==="add") {
             setCart([newItem])
             
         }else if (validacion !== undefined & operation ==="add") {
             validacion.quantity = validacion.quantity + 1
             setCurrentCantidad(currentCantidad+1)
-            console.log(cantidad);
         }else{
             validacion.quantity = validacion.quantity - 1
-        }    
-            
-        
-        console.log(cart);
+        }                         
     }
 
   return <DetailsContainer>
@@ -142,7 +137,7 @@ const Details = ({products}) => {
                 
                 <div className='row'>
                 {
-                    category === "1"?                    
+                    category === "1" || category ==="2"?                    
                     products.filter(categoria => categoria.categoryId === 3).map(item => (
                             <div className='col-6 text-center mb-5 'key={item.id}>
                                 <ComboCard>
@@ -158,7 +153,20 @@ const Details = ({products}) => {
                             </div>
                         
                     ))
-                    : <H2Title>Tamales</H2Title>
+                    : products.filter(categoria => categoria.categoryId === 1).map(item => (
+                        <div className='col-6 text-center mb-5 'key={item.id}>
+                            <ComboCard>
+                                <InputContainer>
+                                    <img src={item.image} alt={item.name} className='h-auto'/>
+                                    <input type="checkbox"  value={item.price}/>
+                                </InputContainer>
+                                <ComboItemDescription>
+                                    <p>{item.name}</p>
+                                    <span>+ ${item.price}MXN</span>
+                                </ComboItemDescription>
+                            </ComboCard>
+                        </div>
+                    ))
                 }
                 </div>
             </div>

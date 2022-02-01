@@ -1,26 +1,34 @@
 /* eslint-disable no-undef */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Carousel from 'react-elastic-carousel'
 import '../styles/carrousel.css';
 import { DescriptionContainer } from '../styles/DetailStyle';
 
-const Carrouserl = ({products, focus, category}) => {
+const Carrouserl = ({ products, focus, category }) => {
+
+    const [datos, setDatos] = useState({});
     
-    let item = 0;
+    
     useEffect(() => {
-        document.getElementById("flavor"+item).style.opacity="1";  
-              
+        document.getElementById("flavor"+focus).style.opacity="1";  
+        //description(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const prueba = (position) => {
+
+    const description = () => {        
+        const current = products.filter(categoria => categoria.categoryId === Number(category))
+        return current[Number(focus)]
         
+    }
+    
+    let beforeFlavor = focus;
+        
+    const prueba = (position) => {
         const { index } = position
-        document.getElementById("flavor"+item).style.opacity="0.5"; 
-        item = index;
+        document.getElementById("flavor"+beforeFlavor).style.opacity="0.5"; 
+        beforeFlavor = index;
         const sabor = document.getElementById("flavor"+index)
-        sabor.style.opacity="1";
-        console.log("#Flavor"+index);
-        console.log(sabor);
+        sabor.style.opacity="1";        
     }
     return <>
             <div className='styling-example w-100 h-100'>
@@ -31,6 +39,7 @@ const Carrouserl = ({products, focus, category}) => {
                 outerSpacing={25}
                 onChange={index => (
                     prueba(index)
+                    
                 )}> 
                     {
                         products.filter(categoria => categoria.categoryId === Number(category)).map(item => (
@@ -40,8 +49,8 @@ const Carrouserl = ({products, focus, category}) => {
                     }
                 </Carousel>
                 <DescriptionContainer>
-                <h1>Guajolota de Tamal Verde</h1>
-                <p>$25 MXN</p>
+                <h1>a</h1>
+                <p>$MXN</p>
                 </DescriptionContainer>
             </div>        
             </>;
