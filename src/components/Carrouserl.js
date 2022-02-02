@@ -5,30 +5,34 @@ import '../styles/carrousel.css';
 import { DescriptionContainer } from '../styles/DetailStyle';
 
 const Carrouserl = ({ products, focus, category }) => {
-
-    const [datos, setDatos] = useState({});
-    
+    //let beforeFlavor = focus;
+    const [items, setItems] = useState([]);
+    const [focusFlavor, setfocusFlavor] = useState(focus);
+    const [current, setCurrent] = useState({});
     
     useEffect(() => {
+        console.log("carrousel montado");
         document.getElementById("flavor"+focus).style.opacity="1";  
-        //description(); 
+        getItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [products]);
 
-    const description = () => {        
-        const current = products.filter(categoria => categoria.categoryId === Number(category))
-        return current[Number(focus)]
-        
+    const getItems = () => {
+        setItems(products.filter(categoria => categoria.categoryId === Number(category)))
+        setCurrent(products[focus])
+        //console.log(items[focus].name);
     }
     
-    let beforeFlavor = focus;
+    
+    
         
     const prueba = (position) => {
         const { index } = position
-        document.getElementById("flavor"+beforeFlavor).style.opacity="0.5"; 
-        beforeFlavor = index;
-        const sabor = document.getElementById("flavor"+index)
-        sabor.style.opacity="1";        
+        document.getElementById("flavor"+focusFlavor).style.opacity="0.5"; 
+        setfocusFlavor(index)
+        //beforeFlavor = index;
+        document.getElementById("flavor"+index).style.opacity="1"
+        //sabor.style.opacity="1";        
     }
     return <>
             <div className='styling-example w-100 h-100'>
@@ -42,15 +46,14 @@ const Carrouserl = ({ products, focus, category }) => {
                     
                 )}> 
                     {
-                        products.filter(categoria => categoria.categoryId === Number(category)).map(item => (
-                        <div className='text-end' key={item.id}> <img src={item.image} alt={item.name} className='w-75'/></div>
-                                                    
+                        items.map(item => (
+                        <div className='text-end' key={item.id}> <img src={item.image} alt={item.name} className='w-75'/></div>                                                    
                     ))
                     }
                 </Carousel>
                 <DescriptionContainer>
-                <h1>a</h1>
-                <p>$MXN</p>
+                <h1>{items[focusFlavor]?.name}</h1>
+                <p>${items[focusFlavor]?.price} MXN</p>
                 </DescriptionContainer>
             </div>        
             </>;
