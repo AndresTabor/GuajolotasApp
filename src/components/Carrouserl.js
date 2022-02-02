@@ -8,7 +8,6 @@ const Carrouserl = ({ products, focus, category }) => {
     //let beforeFlavor = focus;
     const [items, setItems] = useState([]);
     const [focusFlavor, setfocusFlavor] = useState(focus);
-    const [current, setCurrent] = useState({});
     
     useEffect(() => {
         console.log("carrousel montado");
@@ -18,21 +17,16 @@ const Carrouserl = ({ products, focus, category }) => {
     }, [products]);
 
     const getItems = () => {
-        setItems(products.filter(categoria => categoria.categoryId === Number(category)))
-        setCurrent(products[focus])
-        //console.log(items[focus].name);
+        setItems(products.filter(categoria => categoria.categoryId === Number(category))) 
     }
     
-    
-    
-        
-    const prueba = (position) => {
+         
+    const changeFlavor = (position) => {
         const { index } = position
         document.getElementById("flavor"+focusFlavor).style.opacity="0.5"; 
         setfocusFlavor(index)
-        //beforeFlavor = index;
         document.getElementById("flavor"+index).style.opacity="1"
-        //sabor.style.opacity="1";        
+              
     }
     return <>
             <div className='styling-example w-100 h-100'>
@@ -42,7 +36,7 @@ const Carrouserl = ({ products, focus, category }) => {
                 focusOnSelect={true}
                 outerSpacing={25}
                 onChange={index => (
-                    prueba(index)
+                    changeFlavor(index)
                     
                 )}> 
                     {

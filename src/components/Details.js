@@ -66,9 +66,10 @@ const Details = ({products}) => {
             
         }else if (validacion !== undefined & operation ==="add") {
             validacion.quantity = validacion.quantity + 1
-            setCurrentCantidad(currentCantidad+1)
+            setCurrentCantidad(currentCantidad + 1)
         }else{
             validacion.quantity = validacion.quantity - 1
+            setCurrentCantidad(currentCantidad - 1)
         }                         
     }
 
