@@ -82,7 +82,10 @@ export const ComboDescription = styled.p`
     opacity: 0.5;
     margin: 0 0 24px 18px;
 `
-
+export const BtnCombo = styled.button`
+    border: none;
+    border-radius: 20px;
+`
 export const ComboCard = styled.div`
     display: flex;
     flex-direction: column;
@@ -120,7 +123,14 @@ export const ComboItemDescription = styled.div`
         color: var(--primary);
     }
 `
-
+export const Btncontainer = styled.div`
+    width: 100%;
+    background: rgba(242, 242, 242, 0.01);
+    backdrop-filter: blur(48px);
+    position: fixed;
+    bottom: 0;
+    padding: 16px 24px;
+`
 export const BtnAddCart = styled.button`
     display: flex;
     flex-direction: row;
@@ -130,6 +140,7 @@ export const BtnAddCart = styled.button`
     background-color: var(--primary);
     width: 312px;
     height: 69px;
-    padding: 24px 28px;
+    padding: 24px 30px;
     border-radius: 40px;
+    
 `

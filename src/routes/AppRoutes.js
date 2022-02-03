@@ -6,7 +6,7 @@ import Details from '../components/Details';
 import { Home } from '../components/Home';
 import { Login } from '../components/Login';
 import Register from '../components/Register';
-import { getData } from '../helpers/GetData';
+import { getData } from '../helpers/CrudData';
 import { endPoint } from '../helpers/Url';
 
 const AppRoutes = () => {
@@ -33,7 +33,7 @@ const AppRoutes = () => {
               <Route path="/register" element={<Register/>} /> 
               <Route path="/" element={<Home/>} /> 
               <Route path="/cart" element={<Cart/>} /> 
-              <Route path="/details/:id/:category" element={<Details  products={products}/>} />
+              <Route path="/details/:index/:category" element={<Details  products={products}/>} />
               <Route path="/carrousel" element={<Carrouserl />} />  
               <Route path="/*" element={<Navigate to="/"/>} />            
             </Routes>

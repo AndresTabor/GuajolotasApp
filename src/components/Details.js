@@ -1,77 +1,113 @@
 /* eslint-disable no-cond-assign */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { postData } from '../helpers/CrudData';
 import { FlavorImages } from '../helpers/FlavorIcons';
-import { AmountContainer, BtnAddCart, DetailsContainer, IconContainer, FlavorImage, H2Title, ComboDescription, ComboCard, InputContainer, ComboItemDescription, FlavorBtn } from '../styles/DetailStyle';
+import { endPoint } from '../helpers/Url';
+import { AmountContainer, BtnAddCart, DetailsContainer, IconContainer, FlavorImage, H2Title, ComboDescription, ComboCard, InputContainer, ComboItemDescription, FlavorBtn, Btncontainer, BtnCombo } from '../styles/DetailStyle';
 import Carrouserl from './Carrouserl';
 
-const Details = ({products}) => {
+const Details = ({ products }) => {
+    const MySwal = withReactContent(Swal)
     const params = useParams();
-    const { id, category } = params;
-    const [subtotal, setSubtotal] = useState(0);
-    // eslint-disable-next-line no-unused-vars
-    const [cantidad, setCantidad] = useState(1);
-    const [currentCantidad, setCurrentCantidad] = useState(1);
-    // eslint-disable-next-line no-unused-vars
-    const [inicial, setInicial] = useState(1);
-    const [cart, setCart] = useState([]);
-    const [firstItem, setFirstItem] = useState(
-        {
-            id:     "obj.id",
-            image:  "obj.image",
-            name:   "obj.name",
-            price:  "obj.price",
-            quantity: 1,
-        }
-    )
-    
-    
+    const { index, category } = params;
+    const navigate = useNavigate();
 
+    const [firstItem, setFirstItem] = useState({}) //estado que almacena el elemento focus carrousel
+    const [combos, setCombos] = useState([]);      //estado que almacena los items seleccionados en combos
+    const [resetCombo, setResetCombo] = useState(false); //estado que resetea los combos y el total al cambiar el focus corrousel
+    const [total, setTotal] = useState( 0 );       //estado que almacena el valor total a pagar
+
+    useEffect(() => {
+        console.log("montaje detalle");
+        document.getElementById("remove").style.opacity="0.5";
+        currentProduct( index );        
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const valorInicial = () =>{
-        if (products.length > 0) {
-            const itemsito = products.find(item => item.id === inicial)
-            setSubtotal(itemsito.price)
-        }else{
-            console.log("vacio");
-        }
-       
+    }, [products]);
+
+    //actualizo la info del elemento focus en el carrousel
+    const currentProduct = ( i ) => {
+        const product = products.filter(item => item.categoryId === Number( category ))[ i ]
+        setTotal( Number(product.price) )
+        setFirstItem({
+            ...product,
+            quantity: 1,
+        })   
     }
 
-    useEffect(() => {
-        console.log("montaje");
-        valorInicial();
-    }, [valorInicial]);
-
-    useEffect(() => {
-        addCartList(firstItem, "add")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setFirstItem]);
-    
-
-    
-    const addCartList = (obj, operation) => {
-        const newItem = {
-            id:    obj.id,
-            image: obj.image,
-            name:  obj.name,
-            price:  obj.price,
-            quantity: 1,
+    // Cambia la cantidad de items a agregar
+    const setQuantity = ( operation ) => {
+        if (operation === "add" & firstItem.quantity === 1) {
+            document.getElementById("remove").style.opacity="1";
+        }else if(operation === "remove" & firstItem.quantity === 2){
+            document.getElementById("remove").style.opacity="0.5";
         }
-        const validacion = cart.find(item => item.id === newItem.id)
+
+        if(operation === "add"){
+            setFirstItem({
+                ...firstItem, 
+                quantity : firstItem.quantity + 1
+            })
+            setTotal(total + Number(firstItem.price))
+        }else if (firstItem.quantity > 1) {
+            setFirstItem({
+                ...firstItem, 
+                quantity : firstItem.quantity - 1
+            })
+            setTotal(total - Number(firstItem.price))
+        }else{
+            MySwal.fire({
+            title: <strong>Cantidad no valida</strong>,
+            html: <i>Intentar de nuevo</i>,
+            icon: 'error',
+            width: "80%"
+            })
+        }
+    }
+
+    //añade un elemento de la seccion de combo
+    const addCombo = ( id ) => {
+        const input= document.getElementById( "check"+id );
+        const checkBoxes = document.querySelectorAll("input[type=checkbox]:checked");
+        const newCombo = products.find( product => product.id === id)
+
+        checkBoxes.length < 1? setResetCombo(false): console.log(resetCombo)
         
-        if (validacion === undefined & operation ==="add") {
-            setCart([newItem])
+        if( input.checked){            
+            setCombos([...combos, newCombo])
+            setTotal(total + Number(newCombo.price));
+            console.log("si");
             
-        }else if (validacion !== undefined & operation ==="add") {
-            validacion.quantity = validacion.quantity + 1
-            setCurrentCantidad(currentCantidad + 1)
-        }else{
-            validacion.quantity = validacion.quantity - 1
-            setCurrentCantidad(currentCantidad - 1)
-        }                         
+        }else if ( !input.checked & resetCombo ){
+            setCombos(combos.filter(item => item.id !== id))
+            setTotal(Number(firstItem.price));           
+            //console.log( resetCombo );
+        }else if ( !input.checked ){
+            setCombos(combos.filter(item => item.id !== id))
+            setTotal(total - Number(newCombo.price));
+            //console.log( resetCombo );
+        }  
+         
+        
     }
+    
+    
+    const addToCart = () =>{
+        const newCart = { 
+            totalPagar: total, 
+            itemsCart: [firstItem]
+        }   
+        if (combos.length !== 0) {
+            combos.map( combo => newCart.itemsCart.push( combo ))  
+        }
+        //localStorage.setItem("carro", JSON.stringify(newCart));
+        postData( endPoint+"cart/", newCart );
+        navigate("/cart");
+    }
+    
 
   return <DetailsContainer>
             <IconContainer>
@@ -87,18 +123,23 @@ const Details = ({products}) => {
                 </Link>
             </IconContainer>
             <>
-                <Carrouserl focus={id} products={products} category={category}/>
+                <Carrouserl focus={index} 
+                products={products} 
+                category={category} 
+                currentProduct={currentProduct} 
+                setTotal={setTotal} 
+                setResetCombo={setResetCombo}/>
             </>
             
             <AmountContainer>
-                <button onClick={()=> addCartList(firstItem, "remove")}>
+                <button onClick={() =>setQuantity("remove")} id='remove'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                 </svg>
                 </button>
-                <span>{currentCantidad}</span>
-                <button onClick={()=> addCartList(firstItem, "add")}>
+                <span>{firstItem.quantity}</span>
+                <button onClick={() =>setQuantity("add")} id='add'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -126,7 +167,7 @@ const Details = ({products}) => {
                 }
                 </div>
             </div>
-            <div>
+            <div className='mb-5'>
                 { 
                     category === "1" || category === "3"? <H2Title>Guajalocombo</H2Title>: <H2Title>Bebidas</H2Title>
                 }
@@ -141,37 +182,55 @@ const Details = ({products}) => {
                     category === "1" || category ==="2"?                    
                     products.filter(categoria => categoria.categoryId === 3).map(item => (
                             <div className='col-6 text-center mb-5 'key={item.id}>
-                                <ComboCard>
-                                    <InputContainer>
-                                        <img src={item.image} alt={item.name} className='h-auto'/>
-                                        <input type="checkbox"  value={item.price}/>
-                                    </InputContainer>
-                                    <ComboItemDescription>
-                                        <p>{item.name}</p>
-                                        <span>+ ${item.price}MXN</span>
-                                    </ComboItemDescription>
-                                </ComboCard>
+                                <BtnCombo id={"btnCheck"+ item.id}>
+                                    <ComboCard>
+                                        <InputContainer>
+                                            <img src={item.image} alt={item.name} className='h-auto'/>
+                                            <input type="checkbox" 
+                                            className='cbox' 
+                                            value={item.price} 
+                                            id={"check"+item.id} 
+                                            onClick={() => 
+                                            addCombo( item.id )}/>
+                                        </InputContainer>
+                                        <ComboItemDescription>
+                                            <p>{item.name}</p>
+                                            <span>+ ${item.price}MXN</span>
+                                        </ComboItemDescription>
+                                    </ComboCard>
+                                </BtnCombo>
                             </div>
                         
                     ))
                     : products.filter(categoria => categoria.categoryId === 1).map(item => (
                         <div className='col-6 text-center mb-5 'key={item.id}>
-                            <ComboCard>
-                                <InputContainer>
-                                    <img src={item.image} alt={item.name} className='h-auto'/>
-                                    <input type="checkbox"  value={item.price}/>
-                                </InputContainer>
-                                <ComboItemDescription>
-                                    <p>{item.name}</p>
-                                    <span>+ ${item.price}MXN</span>
-                                </ComboItemDescription>
-                            </ComboCard>
+                            <button id={item.id}>
+                                <BtnCombo>
+                                    <ComboCard>
+                                        <InputContainer>
+                                            <img src={item.image} alt={item.name} className='h-auto'/>
+                                            <input type="checkbox" 
+                                            className='cbox' 
+                                            value={item.price} 
+                                            id={"check"+item.id} 
+                                            onClick={() => 
+                                            addCombo( item.id )}/>
+                                        </InputContainer>
+                                        <ComboItemDescription>
+                                            <p>{item.name}</p>
+                                            <span>+ ${item.price}MXN</span>
+                                        </ComboItemDescription>
+                                    </ComboCard>
+                                </BtnCombo>
+                            </button>
                         </div>
                     ))
                 }
                 </div>
             </div>
-            <BtnAddCart>Agregar {cantidad} al carrito <span>${subtotal}</span></BtnAddCart>
+            <Btncontainer >
+                <BtnAddCart onClick={() => addToCart()}>Agregar {firstItem.quantity + combos.length} al carrito <span>$ { total } MXN</span></BtnAddCart>
+            </Btncontainer>
         </DetailsContainer>;
 };
 

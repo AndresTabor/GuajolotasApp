@@ -4,7 +4,7 @@ import Carousel from 'react-elastic-carousel'
 import '../styles/carrousel.css';
 import { DescriptionContainer } from '../styles/DetailStyle';
 
-const Carrouserl = ({ products, focus, category }) => {
+const Carrouserl = ({ products, focus, category, currentProduct, setTotal,  setResetCombo }) => {
     //let beforeFlavor = focus;
     const [items, setItems] = useState([]);
     const [focusFlavor, setfocusFlavor] = useState(focus);
@@ -19,13 +19,27 @@ const Carrouserl = ({ products, focus, category }) => {
     const getItems = () => {
         setItems(products.filter(categoria => categoria.categoryId === Number(category))) 
     }
-    
+
+    const getCheked = () => {
+        setResetCombo(true)
+        //console.log(document.querySelectorAll('input[type=checkbox]:checked'))
+        const element = document.querySelectorAll("input[type=checkbox]:checked")
+        if (element.length !== 0) {
+            element.forEach(check => check.click());
+            
+        }else{
+            console.log("no hay combos");
+        }
+        
+    }
          
     const changeFlavor = (position) => {
-        const { index } = position
+        const { index } = position;
+        currentProduct( index );  
         document.getElementById("flavor"+focusFlavor).style.opacity="0.5"; 
-        setfocusFlavor(index)
+        setfocusFlavor( index );
         document.getElementById("flavor"+index).style.opacity="1"
+        getCheked();
               
     }
     return <>
