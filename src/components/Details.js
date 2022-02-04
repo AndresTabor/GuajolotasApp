@@ -77,7 +77,7 @@ const Details = ({ products }) => {
         checkBoxes.length < 1? setResetCombo(false): console.log(resetCombo)
         
         if( input.checked){            
-            setCombos([...combos, newCombo])
+            setCombos([...combos, {...newCombo, quantity:1}])
             setTotal(total + Number(newCombo.price));
             console.log("si");
             
