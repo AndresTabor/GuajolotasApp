@@ -169,3 +169,14 @@ export const BtnClose = styled.button`
     background: none;
     margin: 0;
 `
+/* Spiner */
+export const Overley= styled.div`
+    display: none;
+    position: fixed;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+`

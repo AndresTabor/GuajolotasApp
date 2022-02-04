@@ -1,12 +1,14 @@
 /* eslint-disable no-cond-assign */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { postData } from '../helpers/CrudData';
 import { FlavorImages } from '../helpers/FlavorIcons';
 import { endPoint } from '../helpers/Url';
+import { Overley } from '../styles/CartStyle';
 import { AmountContainer, BtnAddCart, DetailsContainer, IconContainer, FlavorImage, H2Title, ComboDescription, ComboCard, InputContainer, ComboItemDescription, FlavorBtn, Btncontainer, BtnCombo } from '../styles/DetailStyle';
 import Carrouserl from './Carrouserl';
 
@@ -103,9 +105,12 @@ const Details = ({ products }) => {
         if (combos.length !== 0) {
             combos.map( combo => newCart.itemsCart.push( combo ))  
         }
-        //localStorage.setItem("carro", JSON.stringify(newCart));
+        localStorage.setItem("carro", JSON.stringify(newCart));
         postData( endPoint+"cart/", newCart );
-        navigate("/cart");
+        document.getElementById("spinerContainer").style.display="flex";
+        setTimeout(() => {
+            navigate("/cart");            
+        }, 500);
     }
     
 
@@ -231,6 +236,9 @@ const Details = ({ products }) => {
             <Btncontainer >
                 <BtnAddCart onClick={() => addToCart()}>Agregar {firstItem.quantity + combos.length} al carrito <span>$ { total } MXN</span></BtnAddCart>
             </Btncontainer>
+            <Overley id='spinerContainer'>
+                <Spinner animation="border" variant="warning"  />
+            </Overley>
         </DetailsContainer>;
 };
 

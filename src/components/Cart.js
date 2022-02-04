@@ -12,7 +12,7 @@ const Cart = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const [itemUpdate, setItemUpdate] = useState({});
-  const [newTotal, setNewTotal] = useState( 68 );
+  const [newTotal, setNewTotal] = useState( 0 );
 
   const { itemsCart } = cartItems
 
