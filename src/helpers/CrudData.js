@@ -19,3 +19,10 @@ export const putData = ( url, data ) => {
     .catch(error => console.log(error))
 
 }
+
+export const deleteData = ( url, data ) => {
+    axios.delete( url, data )
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+
+}

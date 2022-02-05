@@ -110,7 +110,7 @@ const Details = ({ products }) => {
         document.getElementById("spinerContainer").style.display="flex";
         setTimeout(() => {
             navigate("/cart");            
-        }, 500);
+        }, 700);
     }
     
 

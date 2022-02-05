@@ -1,20 +1,23 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { getData, putData } from '../helpers/CrudData';
+import { deleteData, getData, putData } from '../helpers/CrudData';
 import { endPoint } from '../helpers/Url';
-import { BackArrow, Btn, BtnClose, BtnConfirm, BtnUpdate, CartIconContainer, CartTitle, Container, DescriptionCard, DescriptionItem, ImageModal, Modal, PopupModal, PriceCard, SubtotalContainer } from '../styles/CartStyle';
-
+import { BackArrow, Btn, BtnClose, BtnConfirm, BtnUpdate, CartIconContainer, CartTitle, Container, DescriptionCard, DescriptionItem, ImageModal, Modal, Overley, PopupModal, PriceCard, SubtotalContainer } from '../styles/CartStyle';
+import { BsCartXFill } from 'react-icons/bs';
 
 const Cart = () => {
-  const MySwal = withReactContent(Swal)
+  const MySwal = withReactContent(Swal);
+
+  
 
   const [cartItems, setCartItems] = useState([]);
   const [itemUpdate, setItemUpdate] = useState({});
   const [newTotal, setNewTotal] = useState( 0 );
 
-  const { itemsCart } = cartItems
+  const { itemsCart } = cartItems;
 
   useEffect(() => {
     console.log("montaje carrito");
@@ -32,6 +35,7 @@ const Cart = () => {
 
   const closeModal = () => {
     document.getElementById("cartModal").style.display="none";
+    document.getElementById("spinerContainer").style.display="flex";
   }
 
   const setQuantity = ( operation ) => {
@@ -69,10 +73,10 @@ const Cart = () => {
         })
     }
   }
-
   
-
-  const putCart = ( id ) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const putCart = useCallback(( id ) => {
+    document.getElementById("spinerContainer").style.display="flex"; 
     const unchanged  = itemsCart?.filter( item => item.id !== id);    
     const newItems = [ itemUpdate, ...unchanged ]
     const cartUpdate = {
@@ -86,11 +90,31 @@ const Cart = () => {
       totalPagar: newTotal,
       itemsCart: newItems
     }))
-    setNewTotal(cartItems.totalPagar)
+    setNewTotal( cartItems.totalPagar );
 
+    setTimeout(() => {
+      closeModal();
+      // eslint-disable-next-line no-restricted-globals
+      location.reload(); 
+          
+    }, 100);
+  })
+
+  const deleteCart = () => {
+    //console.log("delete");
+    if (Object.entries(cartItems).length !== 0) {      
+      document.getElementById("spinerContainer").style.display="flex";
+      deleteData( endPoint+"cart/1" )
+      setTimeout(() => {
+        closeModal();
+        // eslint-disable-next-line no-restricted-globals
+        location.reload(); 
+        document.getElementById("spinerContainer").style.display="none";  
+      }, 100);
+      
+    }
   }
-
-
+  
   return <>
           <Container>
             <CartTitle>Carrito</CartTitle>
@@ -99,6 +123,7 @@ const Cart = () => {
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
               </BackArrow>
             </a>
+            <BsCartXFill className='vaciarCarro' onClick={() => deleteCart()}/>
             { //verifico si el objeto cart en la data esta vacio
               Object.entries(cartItems).length === 0 ?
               <CartIconContainer>
@@ -162,6 +187,9 @@ const Cart = () => {
               </PopupModal>
             </Modal>
           </Container>
+          <Overley id='spinerContainer'>
+                <Spinner animation="border" variant="warning"  />
+            </Overley>
         </>;
 };
 

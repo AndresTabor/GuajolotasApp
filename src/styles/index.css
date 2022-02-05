@@ -21,6 +21,12 @@ body {
   background-color: var(--primary)!important;
 }
 
-
+.vaciarCarro{
+  position: relative;
+  top: -72px;
+  left: 273px;
+  font-size: 24px;
+  color: grey;
+}
 
 
