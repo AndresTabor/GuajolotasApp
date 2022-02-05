@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
@@ -7,10 +8,11 @@ import { deleteData, getData, putData } from '../helpers/CrudData';
 import { endPoint } from '../helpers/Url';
 import { BackArrow, Btn, BtnClose, BtnConfirm, BtnUpdate, CartIconContainer, CartTitle, Container, DescriptionCard, DescriptionItem, ImageModal, Modal, Overley, PopupModal, PriceCard, SubtotalContainer } from '../styles/CartStyle';
 import { BsCartXFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const MySwal = withReactContent(Swal);
-
+  const navigate = useNavigate()
   
 
   const [cartItems, setCartItems] = useState([]);
@@ -111,18 +113,18 @@ const Cart = () => {
         location.reload(); 
         document.getElementById("spinerContainer").style.display="none";  
       }, 100);
-      
+      localStorage.removeItem("cartState");
     }
   }
-  
+  const backPage = () => {
+    navigate(-1);
+  };
   return <>
           <Container>
             <CartTitle>Carrito</CartTitle>
-            <a href='/' style={{color: "var(--secondary)"}}>
-              <BackArrow xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+              <BackArrow onClick={backPage} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
               </BackArrow>
-            </a>
             <BsCartXFill className='vaciarCarro' onClick={() => deleteCart()}/>
             { //verifico si el objeto cart en la data esta vacio
               Object.entries(cartItems).length === 0 ?

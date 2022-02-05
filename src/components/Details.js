@@ -5,14 +5,14 @@ import { Spinner } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { postData } from '../helpers/CrudData';
+import { getData, postData, putData } from '../helpers/CrudData';
 import { FlavorImages } from '../helpers/FlavorIcons';
 import { endPoint } from '../helpers/Url';
 import { Overley } from '../styles/CartStyle';
 import { AmountContainer, BtnAddCart, DetailsContainer, IconContainer, FlavorImage, H2Title, ComboDescription, ComboCard, InputContainer, ComboItemDescription, FlavorBtn, Btncontainer, BtnCombo } from '../styles/DetailStyle';
 import Carrouserl from './Carrouserl';
 
-const Details = ({ products }) => {
+const Details = ({ products, cartState, setCartState }) => {
     const MySwal = withReactContent(Swal)
     const params = useParams();
     const { index, category } = params;
@@ -98,15 +98,36 @@ const Details = ({ products }) => {
     
     
     const addToCart = () =>{
-        const newCart = { 
-            totalPagar: total, 
-            itemsCart: [firstItem]
-        }   
-        if (combos.length !== 0) {
-            combos.map( combo => newCart.itemsCart.push( combo ))  
+        
+        //valido si ya hay algo en el carro
+        if (cartState === false) {
+            const newCart = { 
+                totalPagar: total, 
+                itemsCart: [firstItem]
+            }   
+            if (combos.length !== 0) {
+                combos.map( combo => newCart.itemsCart.push( combo ))  
+            }
+            postData( endPoint+"cart/", newCart ); 
+            setCartState(true);
+            localStorage.setItem("cartState", true) 
+
+        }else{
+            //let cartData = {};
+            getData( endPoint+"cart/1" )
+            .then(resp =>{
+                let cartData = resp
+                cartData.totalPagar = cartData.totalPagar + total;
+                cartData.itemsCart = [...cartData.itemsCart, firstItem ] 
+
+                if (combos.length !== 0) {
+                    combos.map( combo => cartData.itemsCart.push( combo ))  
+                }
+                console.log(cartData);
+                putData( endPoint+"cart/1/", cartData )
+            });               
         }
-        localStorage.setItem("carro", JSON.stringify(newCart));
-        postData( endPoint+"cart/", newCart );
+
         document.getElementById("spinerContainer").style.display="flex";
         setTimeout(() => {
             navigate("/cart");            
