@@ -9,6 +9,7 @@ import { endPoint } from '../helpers/Url';
 import { BackArrow, Btn, BtnClose, BtnConfirm, BtnUpdate, CartIconContainer, CartTitle, Container, DescriptionCard, DescriptionItem, ImageModal, Modal, Overley, PopupModal, PriceCard, SubtotalContainer } from '../styles/CartStyle';
 import { BsCartXFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import CheckoutForm from './CheckoutForm';
 
 const Cart = () => {
   const MySwal = withReactContent(Swal);
@@ -25,7 +26,7 @@ const Cart = () => {
     console.log("montaje carrito");
     getData( endPoint+"cart/1" ).then( items => setCartItems( items ));
     setNewTotal( cartItems.totalPagar );
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItems.totalPagar]);
 
   const updateModal = ( id ) => {
@@ -119,6 +120,12 @@ const Cart = () => {
   const backPage = () => {
     navigate(-1);
   };
+
+  const paymentModal = ( show ) =>{
+    show === true?
+    document.getElementById("modal-payment").style.display="block"
+    : document.getElementById("modal-payment").style.display="none"
+  }
   return <>
           <Container>
             <CartTitle>Carrito</CartTitle>
@@ -158,7 +165,7 @@ const Cart = () => {
                   <p>Total</p>
                   <p>${cartItems.totalPagar} MXN</p>
                 </SubtotalContainer>
-                <Btn className='opacity-100' onClick={() => putCart()}>Pagar</Btn>
+                <Btn className='opacity-100' onClick={() => paymentModal( true )}>Pagar</Btn>
               </div>
             }
             <Modal id='cartModal'>
@@ -190,8 +197,9 @@ const Cart = () => {
             </Modal>
           </Container>
           <Overley id='spinerContainer'>
-                <Spinner animation="border" variant="warning"  />
-            </Overley>
+            <Spinner animation="border" variant="warning"  />
+          </Overley>
+          <CheckoutForm closeModal={paymentModal} totalpayment={newTotal}/>
         </>;
 };
 

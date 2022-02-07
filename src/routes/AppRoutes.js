@@ -14,6 +14,7 @@ const AppRoutes = () => {
   const [user, setUser] = useState({});
   const [logged, setLogged] = useState(false)
   const [cartState, setCartState] = useState(false);
+  
 
   useEffect(() => {
     getData(endPoint+"products").then(items => setProducts(items))
@@ -32,17 +33,19 @@ const AppRoutes = () => {
     localStorage.setItem('estado',logged)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logged])
+
+  
   
   console.log(products);
   return <BrowserRouter>
             <Routes>
+              <Route path="/" element={<Home/>} /> 
               <Route path="/login" element={<Login cambioUser={setUser} setLogged={setLogged} />} /> 
               <Route path="/register" element={<Register/>} /> 
-              <Route path="/" element={<Home/>} /> 
-              <Route path="/cart" element={<Cart/>} /> 
               <Route path="/details/:index/:category" element={<Details  
                 products={products} cartState={cartState} setCartState={setCartState}/>} />
               <Route path="/carrousel" element={<Carrouserl />} />  
+              <Route path="/cart" element={<Cart/>} />               
               <Route path="/*" element={<Navigate to="/"/>} />            
             </Routes>
         </BrowserRouter>;
