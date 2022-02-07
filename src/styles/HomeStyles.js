@@ -76,6 +76,7 @@ export const Buscador= styled.input`
 
 export const NavContainer= styled.div`
     display: flex;
+    
 `
 
 export const ListaC= styled.ul`    
@@ -83,6 +84,7 @@ export const ListaC= styled.ul`
     width:98% ;
     align-items: center;
     justify-content: space-between;
+    padding: 0 1.5rem;
 `
 
 export const Item= styled.li`
