@@ -6,7 +6,6 @@ import Details from '../components/Details';
 import { Home } from '../components/Home';
 import { Login } from '../components/Login';
 import Register from '../components/Register';
-import Search from '../components/Search';
 import { getData } from '../helpers/CrudData';
 import { endPoint } from '../helpers/Url';
 
@@ -46,8 +45,7 @@ const AppRoutes = () => {
               <Route path="/details/:index/:category" element={<Details  
                 products={products} cartState={cartState} setCartState={setCartState}/>} />
               <Route path="/carrousel" element={<Carrouserl />} />  
-              <Route path="/cart" element={<Cart/>} />     
-              <Route path="/search" element={<Search/>} />           
+              <Route path="/cart" element={<Cart/>} />               
               <Route path="/*" element={<Navigate to="/"/>} />            
             </Routes>
         </BrowserRouter>;
