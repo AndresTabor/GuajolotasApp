@@ -230,8 +230,7 @@ const Details = ({ products, cartState, setCartState }) => {
                     ))
                     : products.filter(categoria => categoria.categoryId === 1).map(item => (
                         <div className='col-6 text-center mb-5 'key={item.id}>
-                            <button id={item.id}>
-                                <BtnCombo>
+                                <BtnCombo id={"btnCheck"+ item.id}>
                                     <ComboCard>
                                         <InputContainer>
                                             <img src={item.image} alt={item.name} className='h-auto'/>
@@ -248,7 +247,6 @@ const Details = ({ products, cartState, setCartState }) => {
                                         </ComboItemDescription>
                                     </ComboCard>
                                 </BtnCombo>
-                            </button>
                         </div>
                     ))
                 }
